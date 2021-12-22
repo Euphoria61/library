@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+</head>
+<body>
+欢迎！<br>
+当前用户：<lable th:text="${stu_name}"></lable>
+<div>用户功能：</div>
+<div>
+    <a th:href="@{get_book_list(stu_id=${stu_id},
+                                field_name=${'book_id'},
+                                field_value=${''},
+                                current_page=${1},
+                                page_size=${10})}"><button>图书列表</button></a>
+</div>
+<div>
+    <a th:href="@{get_my_info(stu_id=${stu_id})}"><button>个人中心</button></a>
+</div><br><br><br>
+<div>管理员功能：</div>
+<div>
+    <a th:href="@{show_book_delete}">
+        <button>图书报废</button>
+    </a>
+    <a th:href="@{show_delete_recode}">
+        <button>历史记录</button>
+    </a>
+</div>
+<div>
+    <a th:href="@{show_book_into_inventory}">
+        <button>图书入库</button>
+    </a>
+</div>
+<div>
+    <a th:href="@{show_book_inventory(stu_id=${stu_id},
+                                field_name=${'book_id'},
+                                field_value=${''},
+                                current_page=${1},
+                                page_size=${10})}">
+        <button>查看库存</button>
+    </a>
+</div>
+<div>
+    <a th:href="@{show_book_insert}">
+        <button>新建图书</button>
+    </a>
+</div>
+<div>
+    <a th:href="@{get_book_list(stu_id=${stu_id},
+                                field_name=${'book_id'},
+                                field_value=${''},
+                                current_page=${1},
+                                page_size=${10})}"><button>图书列表</button></a>
+</div>
+<div>
+    <a th:href="@{get_borrow_list(stu_id=${stu_id},
+                                field_name=${'book_id'},
+                                field_value=${''},
+                                current_page=${1},
+                                page_size=${10})}">
+        <button>借阅列表</button>
+    </a>
+</div>
+
+</body>
+</html>

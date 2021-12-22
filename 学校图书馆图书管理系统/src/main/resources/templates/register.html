@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        #register{margin-left: 41%}
+        .form{text-align: left;line-height: 38px;}
+        .p{font-size: 35px;}
+        .button{width: 140px;height: 40px;border-radius: 60px; margin-top: 13px}
+        text{size: 13px;}
+    </style>
+    <title>注册</title>
+</head>
+<body>
+<div id="register">
+    <b class="p">学生信息注册</b><br><br>
+    <form class="form" action="register">
+        <div><input type="file" ></div>
+        <div>学号：<input type="text" th:name="stu_id"></div>
+        <div>密码：<input type="text" th:name="pwd"></div>
+        <div>姓名：<input type="text" th:name="stu_name"></div>
+        <div>籍贯：<input type="text" th:name="home"></div>
+        <div>职务：<input type="text" th:name="post"></div>
+        <div>性别：<select th:name="sex">
+            <option>男</option>
+            <option>女</option>
+        </select></div>
+        <div>专业：<select th:name="pro_id">
+            <option th:each="pro: ${pro_list}"
+                    th:value="${pro.pro_id}"
+                    th:text="${pro.pro_name}">
+            </option>
+        </select></div>
+        <div>民族：<select th:name="nation_id">
+            <option th:each="nation: ${nation_list}"
+                    th:value="${nation.nation_id}"
+                    th:text="${nation.nation_name}">
+            </option>
+        </select></div>
+        <div>学院：<select th:name="xy_id">
+            <option th:each="xy: ${xy_list}"
+                    th:value="${xy.xy_id}"
+                    th:text="${xy.xy_name}">
+            </option>
+        </select></div>
+        <div>出生日期：<input type="text" th:name="birth"></div>
+        <div>入学日期：<input type="text" th:name="rx_date"></div>
+        <input type="submit" value="注册" class="button">
+    </form>
+</div>
+</body>
+</html>

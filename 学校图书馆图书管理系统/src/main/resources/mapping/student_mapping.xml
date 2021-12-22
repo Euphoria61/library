@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Book.mapper.StudentMapper">
+    <select id="isStudentExist" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM stu_info
+        WHERE stu_id = #{stu_id}
+    </select>
+    <select id="getMyInfo" resultType="com.Book.entity.StudentInfo">
+        SELECT si.*, ni.nation_name, pi.pro_name, xi.xy_name FROM stu_info si
+        INNER JOIN nation_info ni ON si.nation_id=ni.nation_id
+        INNER JOIN pro_info pi ON si.pro_id=pi.pro_id
+        INNER JOIN xy_info xi ON si.xy_id=xi.xy_id
+            WHERE 1 = 1 AND stu_id = #{stu_id}
+    </select>
+    <insert id="insert" parameterType="com.Book.entity.StudentInfo">
+        INSERT INTO stu_info(stu_id, pwd, stu_name, sex, nation_id, birth, home, pro_id, rx_date, xy_id, post)
+        VALUES (#{stu_id}, #{pwd}, #{stu_name}, #{sex}, #{nation_id}, #{birth}, #{home}, #{pro_id}, #{rx_date}, #{xy_id}, #{post})
+    </insert>
+    <update id="updateStuInfo" parameterType="com.Book.entity.StudentInfo">
+        UPDATE stu_info
+        SET stu_name=#{stu_name}, nation_id=#{nation_id}, home=#{home}, post=#{post}, sex=#{sex}, pro_id=#{pro_id}, xy_id=#{xy_id}, birth=#{birth}, rx_date=#{rx_date}
+        WHERE stu_id=#{stu_id}
+    </update>
+    <update id="updateStuPwd" parameterType="com.Book.entity.StudentInfo">
+        UPDATE stu_info
+        SET pwd = #{pwd}
+        WHERE stu_id=#{stu_id}
+    </update>
+</mapper>

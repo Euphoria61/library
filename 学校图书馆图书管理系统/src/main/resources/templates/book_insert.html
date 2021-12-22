@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        #insert{margin-left: 41%}
+        .form{text-align: left;line-height: 38px;}
+        .p{font-size: 35px;}
+        .button{width: 140px;height: 40px;border-radius: 60px; margin-top: 13px}
+        text{size: 13px;}
+    </style>
+    <title>新建图书</title>
+</head>
+<body>
+<div id="insert">
+    <b class="p">新建图书</b><br><br>
+    <form class="form" action="insert_a_book">
+        <div>书名：<input type="text" th:name="book_name"></div>
+        <div>课程：<select th:name="course_id"><option th:text="请选择课程类型"></option>
+            <option th:each="course: ${course_list}"
+                    th:value="${course.course_id}"
+                    th:text="${course.course_name}">
+            </option>
+        </select></div>
+        <div>分类一：<select th:name="kp1_id">
+            <option th:each="kp1: ${kp1_list}"
+                    th:value="${kp1.kp1_id}"
+                    th:text="${kp1.kp1_name}">
+            </option>
+        </select></div>
+        <div>分类二：<select th:name="kp2_id">
+            <option th:each="kp2: ${kp2_list}"
+                    th:value="${kp2.kp2_id}"
+                    th:text="${kp2.kp2_name}">
+            </option>
+        </select></div>
+        <input type="submit" value="入库" class="button">
+    </form>
+</div>
+</body>
+</html>

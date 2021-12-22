@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Book.mapper.BookMapper">
+    <select id="getBookList1" resultType="com.Book.entity.BookInfo">
+        SELECT bi.*, ci.course_name, k1i.kp1_name, k2i.kp2_name FROM book_info bi
+        INNER JOIN course_info ci ON bi.course_id = ci.course_id
+        INNER JOIN kp1_info k1i ON bi.kp1_id = k1i.kp1_id
+        INNER JOIN kp2_info k2i ON bi.kp2_id = k2i.kp2_id
+
+        where 1 = 1 AND is_exist = 1 AND shelf_id > 0
+        <if test="fieldName != 'default' ">
+            AND ${fieldName} LIKE '%${fieldValue}%'
+        </if>
+        limit ${pos},${pageSize}
+    </select>
+    <select id="getBookList2" resultType="com.Book.entity.BookInfo">
+        SELECT bi.*, ci.course_name, k1i.kp1_name, k2i.kp2_name FROM book_info bi
+        INNER JOIN course_info ci ON bi.course_id = ci.course_id
+        INNER JOIN kp1_info k1i ON bi.kp1_id = k1i.kp1_id
+        INNER JOIN kp2_info k2i ON bi.kp2_id = k2i.kp2_id
+
+        where 1 = 1 AND is_exist = 1 AND shelf_id = 0
+        <if test="fieldName != 'default' ">
+            AND ${fieldName} LIKE '%${fieldValue}%'
+        </if>
+        limit ${pos},${pageSize}
+    </select>
+    <select id="getBookList3" resultType="com.Book.entity.BookInfo">
+        SELECT bi.*, ci.course_name, k1i.kp1_name, k2i.kp2_name, si.stu_name, boi.borrow_time, boi.cost FROM book_info bi
+        INNER JOIN course_info ci ON bi.course_id = ci.course_id
+        INNER JOIN kp1_info k1i ON bi.kp1_id = k1i.kp1_id
+        INNER JOIN kp2_info k2i ON bi.kp2_id = k2i.kp2_id
+        INNER JOIN borrow_info boi ON bi.code = boi.code
+        INNER JOIN stu_info si ON si.stu_id = boi.stu_id
+
+        where 1 = 1 AND is_exist = 1 AND shelf_id = -1 AND boi.is_return = 0
+        <if test="fieldName != 'default' ">
+            AND ${fieldName} LIKE '%${fieldValue}%'
+        </if>
+        limit ${pos},${pageSize}
+    </select>
+
+    <select id="getBookNumber" resultType="int">
+    SELECT COUNT(*) FROM book_info WHERE code LIKE '${code}%'
+    </select>
+
+    <insert id="insertABook" parameterType="com.Book.entity.BookInfo">
+        INSERT INTO book_info(code, book_name, course_id, kp1_id, kp2_id, shelf_id, is_exist)
+        VALUE (#{code}, #{book_name}, #{course_id}, #{kp1_id}, #{kp2_id}, 0, 1)
+    </insert>
+
+    <update id="putBookIntoShelf" parameterType="string">
+        UPDATE book_info SET shelf_id = #{shelf_id}
+        WHERE code = #{code}
+    </update>
+
+    <update id="putBookIntoInventory" parameterType="string">
+        UPDATE book_info SET shelf_id = 0
+        WHERE code = #{code}
+    </update>
+    <update id="deleteABook" parameterType="string">
+        UPDATE book_info SET is_exist = 0
+        WHERE code = #{code}
+    </update>
+
+    <update id="undoDelete" parameterType="String">
+        UPDATE book_info SET is_exist = 1
+        WHERE code = #{code}
+    </update>
+
+    <select id="getBookInfo" resultType="com.Book.entity.BookInfo">
+        SELECT bi.*, ci.course_name, k1i.kp1_name, k2i.kp2_name, si.pos, si.shelf_code FROM book_info bi
+        INNER JOIN course_info ci ON bi.course_id = ci.course_id
+        INNER JOIN kp1_info k1i ON bi.kp1_id = k1i.kp1_id
+        INNER JOIN kp2_info k2i ON bi.kp2_id = k2i.kp2_id
+        INNER JOIN shelf_info si ON bi.shelf_id = si.shelf_id
+
+        WHERE 1 = 1 AND code = #{code}
+
+    </select>
+
+    <select id="getBookList" resultType="com.Book.entity.BookInfo">
+        SELECT book_name, code FROM book_info bi
+        INNER JOIN shelf_info si ON bi.shelf_id = si.shelf_id
+        WHERE 1 = 1 AND si.shelf_code = #{shelf_code}
+    </select>
+</mapper>

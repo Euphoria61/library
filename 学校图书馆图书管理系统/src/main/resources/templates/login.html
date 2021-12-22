@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        #login{
+            margin: auto;
+            border-top-left-radius: 30px; border-bottom-left-radius: 30px;
+        }
+        .form{text-align: center;line-height: 48px;}
+        .text{width: 220px;height: 25px;}
+        .p{font-size: 35px;}
+        .button{width: 140px;height: 40px;border-radius: 60px;}
+    </style>
+    <title>登录</title>
+</head>
+<body>
+<div id="login">
+    <form class="form" action="check_login" method="post">
+        <br>
+        <p class="p">学校图书馆图书管理系统</p>
+        <input type="text" placeholder="username" id="username1" class="text" th:name="username"><br>
+        <input type="password" placeholder="password" id="password1" class="text" th:name="pwd"><br>
+        <select id="select" th:name="select"><option>学生</option><option>管理员</option></select><br>
+        没有账号？<a th:href="show_register">立即注册</a><br>
+        <input type="submit" value="登录" class="button"/>
+    </form>
+</div>
+</body>
+</html>

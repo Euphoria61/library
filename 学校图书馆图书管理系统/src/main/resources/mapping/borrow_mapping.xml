@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Book.mapper.BorrowMapper">
+    <update id="updateBookInfo" parameterType="string">
+        UPDATE book_info SET shelf_id = -1
+        WHERE code = #{code}
+    </update>
+
+    <insert id="insertBorrowBook" parameterType="com.Book.entity.BorrowInfo">
+        INSERT INTO borrow_info(code, stu_id, borrow_time, need_return_time, is_return, cost)
+        VALUES (#{code}, #{id}, #{borrow_time}, #{need_return_time}, 0, 0)
+    </insert>
+
+    <update id="updateReturnBookInfo" parameterType="string">
+        UPDATE book_info SET shelf_id = 0
+        WHERE code = #{code}
+    </update>
+
+    <update id="updateBorrowBook" parameterType="com.Book.entity.BorrowInfo">
+        UPDATE borrow_info SET is_return = 1, cost = #{cost}, real_return_time = #{real_return_time}
+        WHERE code = #{code}
+    </update>
+
+    <select id="getBorrowTime" resultType="string">
+        SELECT borrow_time FROM borrow_info
+        WHERE code = #{code} AND stu_id = #{stu_id} AND is_return = 0
+    </select>
+
+    <select id="getBorrowList" resultType="com.Book.entity.BorrowInfo">
+        SELECT bi1.*, bi2.book_name FROM borrow_info bi1
+        INNER JOIN book_info bi2 ON bi1.code = bi2.code
+        WHERE 1 = 1 AND bi1.stu_id = #{stu_id} AND is_return = 0
+    </select>
+    <select id="getBorrowRecodeList" resultType="com.Book.entity.BorrowInfo">
+        SELECT bi1.*, bi2.book_name FROM borrow_info bi1
+        INNER JOIN book_info bi2 ON bi1.code = bi2.code
+        WHERE 1 = 1 AND bi1.stu_id = #{stu_id} AND is_return = 1
+    </select>
+
+    <select id="isCost" resultType="float">
+        SELECT cost FROM stu_info
+        WHERE stu_id = #{stu_id}
+    </select>
+</mapper>

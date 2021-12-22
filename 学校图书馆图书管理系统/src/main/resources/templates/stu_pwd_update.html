@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+    #update{margin-left: 41%}
+    .form{text-align: left;line-height: 38px;}
+    .p{font-size: 35px;}
+    .button{width: 140px;height: 40px;border-radius: 60px; margin-top: 13px}
+    text{size: 13px;}
+</style>
+    <title>Title</title>
+</head>
+<body>
+<div id="update">
+    <b class="p">修改密码</b><br><br>
+    <form class="form" action="update_stu_pwd"><input type="hidden" th:name="stu_id" th:value="${stu_id}">
+        <div>用户：<lable th:text="${stu_id}"></lable></div>
+        <div>请输入原密码：<input type="text" th:name="old_pwd"></div>
+        <div>请输入新密码：<input type="text" th:name="new_pwd1"></div>
+        <div>请再次输入新密码：<input type="text" th:name="new_pwd2"></div>
+
+        <input type="submit" value="确认修改" class="button">
+    </form>
+</div>
+</body>
+</html>

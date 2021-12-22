@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:each="my : ${my_info_list} ">
+    <table>
+        <tr><td>学号：</td><td th:text="${my.stu_id}"></td></tr>
+        <tr><td>姓名：</td><td th:text="${my.stu_name}"></td></tr>
+        <tr><td>性别：</td><td th:text="${my.sex}"></td></tr>
+        <tr><td>民族：</td><td th:text="${my.nation_name}"></td></tr>
+        <tr><td>专业：</td><td th:text="${my.pro_name}"></td></tr>
+        <tr><td>学院：</td><td th:text="${my.xy_name}"></td></tr>
+        <tr><td>职务：</td><td th:text="${my.post}"></td></tr>
+    </table>
+    <a th:href="@{show_update(stu_id=${my.stu_id})}"><button>编辑资料</button></a>
+    <a th:href="@{show_pwd_update(stu_id=${my.stu_id})}"><button>修改密码</button></a>
+</div>
+<div>
+    借阅情况：
+    <div>
+        <table>
+
+        </table>
+    </div>
+</div>
+</body>
+</html>

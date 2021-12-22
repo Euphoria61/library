@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        table{
+            width: 1000px;
+            background-color: lightgrey;
+        }
+        th{background-color: dimgray;color: white;}
+        tr:nth-of-type(even){background-color: white}
+
+        #return{position: absolute;}
+        #search{
+            position: absolute;
+            margin-top: 70px;margin-left: 450px;
+        }
+        #book{
+            position: absolute;
+            margin-top: 180px;margin-left: 280px;
+            text-align: center;
+        }
+
+        .button1{width: 140px;height: 40px;border-radius: 60px;}
+        .button2{width: 130px;height: 32px;border-radius: 10px;}
+        .text{width: 420px;height: 28px;}
+    </style>
+    <title>Title</title>
+</head>
+<body>
+
+<div id="return">
+    <a th:href="show_main"><button type="button" class="button1">返回首页</button></a>
+</div>
+
+<div id="search">
+    <form action="/get_book_list" method="get">
+        <select th:name="field_name">
+            <option th:value="code" th:text="图书编号"></option>
+            <option th:value="book_name" th:text="图书名称"></option>
+            <option th:value="course_name" th:text="课程名"></option>
+            <option th:value="kp1_name" th:text="分类一"></option>
+            <option th:value="kp2_name" th:text="分类二"></option>
+        </select>
+        <input  th:name="field_value" type="text" maxlength="20" class="text" th:value="${field_value}" />
+        <input type="hidden" th:name="current_page" th:value="1" />
+        <input type="hidden" th:name="page_size" th:value="10" />
+        <input type="submit" th:value="查询" class="button2"/>
+    </form>
+</div>
+<div id="book">
+    <table id="table">
+        <tr><th></th><th>图书编号</th><th>图书名称</th><th>课程名</th><th>分类一</th><th>分类二</th><th>操作</th></tr>
+        <div th:each="book, itemStat : ${book_list} ">
+            <tr>
+                <td th:text="${itemStat.index + 1}"></td>
+                <td th:text="${book.code}"></td>
+                <td th:text="${book.book_name}"></td>
+                <td th:text="${book.course_name}"></td>
+                <td th:text="${book.kp1_name}"></td>
+                <td th:text="${book.kp2_name}"></td>
+                <td> <a th:href="@{show_edit_student(code=${book.code},
+                                                           field_name=${field_name},
+                                                            field_value=${field_value},
+                                                            current_page=${current_page},
+                                                            page_size=${page_size} )}"
+                        th:text="查看"></a> |
+                    <a th:href="@{show_book_put(code=${book.code},
+                                                           field_name=${field_name},
+                                                            field_value=${field_value},
+                                                            current_page=${current_page},
+                                                            page_size=${page_size} )}"
+                       th:text="上架"></a>
+                </td>
+            </tr>
+        </div>
+    </table><br><br>
+    <div>
+        <a>
+            <button th:href="@{/get_book_list(field_name=${'book_id'},
+                                        field_value=${''},
+                                        page_size=${10},
+                                        current_page=${1})}"
+                    th:text="首页"> </button>
+        </a>
+        <a>
+            <button th:href="@{/get_book_list(field_name=${field_name},
+                                        field_value=${field_value},
+                                        page_size=${10},
+                                        current_page=${current_page}-1)}"
+                    th:text="上一页"> </button>
+        </a>
+        第<lable th:text="${current_page}"></lable>页，共<label th:text="${current_page_number}"></label>页
+        <a>
+            <button th:href="@{/get_book_list(field_name=${field_name},
+                                        field_value=${field_value},
+                                        page_size=${10},
+                                        current_page=${current_page}+1)}"
+                    th:text="下一页"> </button>
+        </a>
+        <a>
+            <button th:href="@{/get_book_list(field_name=${'book_id'},
+                                        field_value=${''},
+                                        page_size=${10},
+                                        current_page=${current_page_number})}"
+                    th:text="尾页"> </button>
+        </a>
+    </div>
+</div>
+</body>
+</html>
